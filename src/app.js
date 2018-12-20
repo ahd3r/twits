@@ -17,4 +17,14 @@
 // console.log(dataFromOtherFile.shit);
 // console.log(dataFromOtherFile.persone('Peyton', 'Female'));
 
+import { http } from './http';
+import { ui } from './ui';
 
+const getPosts=()=>{
+  http.get('http://localhost:3000/posts')
+  .then(data=>{
+    ui.renderPosts(data);
+  })
+  .catch(error=>console.log(error));
+};
+document.addEventListener('DOMContentLoaded', getPosts);
