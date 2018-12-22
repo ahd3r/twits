@@ -1,7 +1,47 @@
-import { http } from './http';
-import { gp } from './app';
+import { createEvent } from './app';
+
+const event = createEvent();
 
 class UI{
+  clearPlace(){
+    while(document.querySelector('.forPost>.col').firstChild){
+      document.querySelector('.forPost>.col').firstChild.remove();
+    }
+  }
+  clearInput(){
+    document.querySelector('#title').value='';
+    document.querySelector('#body').value='';
+  }
+  formAdd(){
+    while(document.querySelector('.card-form>.container-fluid>.mb-3').firstChild){
+      document.querySelector('.card-form>.container-fluid>.mb-3').firstChild.remove();
+    }
+    document.querySelector('.card-form>.container-fluid>.mb-3').appendChild(document.createElement('div')).className='col';
+    document.querySelector('.card-form>.container-fluid>.mb-3').appendChild(document.createElement('div')).className='col-3';
+    document.querySelector('.card-form>.container-fluid>.mb-3>.col-3').appendChild(document.createElement('button')).className='btn form-control btn-primary subm';
+    document.querySelector('.subm').textContent='Post';
+  }
+  formEdit(id,title,body){
+    while(document.querySelector('.card-form>.container-fluid>.mb-3').firstChild){
+      document.querySelector('.card-form>.container-fluid>.mb-3').firstChild.remove();
+    }
+    document.querySelector('#title').value=title;
+    document.querySelector('#body').value=body;
+    document.querySelector('.card-form>.container-fluid>.mb-3').appendChild(document.createElement('div')).className='col col-3 back';
+    document.querySelector('.card-form>.container-fluid>.mb-3>.back').appendChild(document.createElement('button')).className='btn form-control backBtn';
+    document.querySelector('.backBtn').textContent='Back';
+    document.querySelector('.backBtn').addEventListener('click',function(){
+      event.backEvent();
+    });
+    document.querySelector('.card-form>.container-fluid>.mb-3').appendChild(document.createElement('div')).className='col';
+    document.querySelector('.card-form>.container-fluid>.mb-3').appendChild(document.createElement('div')).className='col col-3 updt';
+    document.querySelector('.card-form>.container-fluid>.mb-3>.updt').appendChild(document.createElement('button')).className='btn btn-primary form-control updtBtn';
+    document.querySelector('.updtBtn').textContent='Update';
+    document.querySelector('#id').setAttribute('value', id);
+    document.querySelector('.updtBtn').addEventListener('click',function(){
+      event.updtEvent(document.querySelector('#id').value);
+    });
+  }
   showAlert(msg,classAlert){
     document.querySelector('.forError>.col').appendChild(document.createElement('div')).className=classAlert;
     const error = document.querySelector('.forError>.col>div');
@@ -32,17 +72,11 @@ class UI{
         const forDel=document.querySelector(`.id${post.id}>.forBtn>.placeForDelBtn`);
         forEdit.appendChild(document.createElement('a')).className='editItemBtn';
         document.querySelector(`.id${post.id}>.forBtn>.placeForEditBtn>a`).setAttribute('href','#!');
-        document.querySelector(`.id${post.id}>.forBtn>.placeForEditBtn>a`).addEventListener('click',function(){
-          console.log('edit');
-        });
+        document.querySelector(`.id${post.id}>.forBtn>.placeForEditBtn>a`).addEventListener('click',event.editItemEvent);
         document.querySelector(`.id${post.id}>.forBtn>.placeForEditBtn>a`).appendChild(document.createElement('i')).className='fa fa-edit';
         forDel.appendChild(document.createElement('a')).className='deleteItemBtn';
         document.querySelector(`.id${post.id}>.forBtn>.placeForDelBtn>a`).setAttribute('href','#!');
-        document.querySelector(`.id${post.id}>.forBtn>.placeForDelBtn>a`).addEventListener('click',function(e){
-          const id=e.target.parentElement.parentElement.parentElement.parentElement.classList;
-          http.delete(`http://localhost:3000/posts/${parseInt(id[2].charAt(2))}`);
-          gp;
-        });
+        document.querySelector(`.id${post.id}>.forBtn>.placeForDelBtn>a`).addEventListener('click',event.deleteItemEvent);
         document.querySelector(`.id${post.id}>.forBtn>.placeForDelBtn>a`).appendChild(document.createElement('i')).className='fa fa-close';
       });
     } else {

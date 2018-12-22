@@ -5,12 +5,12 @@ class EasyHTTP{
     return response;
   }
   async post(url,data){
-    const request=await fetch(url, {method:'POST', body:data});
+    const request=await fetch(url, {method:'POST', headers:{'Content-type':'application/json'}, body:data});
     const response = await request.json(); // text()
     return response;
   }
   async put(url,data){
-    const request=await fetch(url, {method:'PUT', body:data});
+    const request=await fetch(url, {method:'PUT', headers:{'Content-type':'application/json'}, body:data});
     const response = await request.json(); // text()
     return response;
   }
