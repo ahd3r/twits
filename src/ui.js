@@ -11,6 +11,7 @@ class UI{
   clearInput(){
     document.querySelector('#title').value='';
     document.querySelector('#body').value='';
+    document.querySelector('#id').value='';
   }
   formAdd(){
     while(document.querySelector('.card-form>.container-fluid>.mb-3').firstChild){
@@ -43,13 +44,15 @@ class UI{
     });
   }
   showAlert(msg,classAlert){
-    document.querySelector('.forError>.col').appendChild(document.createElement('div')).className=classAlert;
-    const error = document.querySelector('.forError>.col>div');
-    error.setAttribute('role', 'alert');
-    error.textContent=msg;
-    setTimeout(function(){
-      document.querySelector('.forError>.col>div').remove();
-    },3000);
+    if(!document.querySelector('.forError>.col>.alert')){
+      document.querySelector('.forError>.col').appendChild(document.createElement('div')).className=classAlert;
+      const error = document.querySelector('.forError>.col>div');
+      error.setAttribute('role', 'alert');
+      error.textContent=msg;
+      setTimeout(function(){
+        document.querySelector('.forError>.col>div').remove();
+      },3000);
+    }
   }
   renderPosts(posts){
     if(posts.length!==0){

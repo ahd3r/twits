@@ -46,7 +46,7 @@ export function createEvent(){
       const body=document.querySelector('#body').value;
       if(title!=='' && body!==''){
         const data = {title:title,body:body};
-        await http.put(`http://localhost:3000/posts/${id}`, data);
+        await http.put(`http://localhost:3000/posts/${id}`, JSON.stringify(data));
         getPosts();
         ui.clearInput();
         ui.formAdd();
