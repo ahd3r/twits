@@ -7,7 +7,9 @@ const getPosts=()=>{
     ui.clearPlace();
     ui.renderPosts(data);
   })
-  .catch(error=>console.log(error));
+  .catch(()=>{
+    ui.bigError();
+  });
 };
 document.addEventListener('DOMContentLoaded', getPosts);
 
@@ -50,6 +52,7 @@ export function createEvent(){
         getPosts();
         ui.clearInput();
         ui.formAdd();
+        ui.showAlert('Edited', 'alert alert-success');
         document.querySelector('.subm').addEventListener('click',addPost);
       } else {
         ui.showAlert('Fill all line', 'alert alert-danger');

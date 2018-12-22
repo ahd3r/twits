@@ -3,6 +3,15 @@ import { createEvent } from './app';
 const event = createEvent();
 
 class UI{
+  bigError(){
+    while(document.querySelector('body').firstChild){
+      document.querySelector('body').firstChild.remove();
+    }
+    document.querySelector('body').appendChild(document.createElement('div')).className='container';
+    document.querySelector('.container').appendChild(document.createElement('div')).className='row';
+    document.querySelector('.row').appendChild(document.createElement('div')).className='col text-center';
+    document.querySelector('.text-center').appendChild(document.createElement('h1')).textContent='Sorry, but our site is not working now';
+  }
   clearPlace(){
     while(document.querySelector('.forPost>.col').firstChild){
       document.querySelector('.forPost>.col').firstChild.remove();
@@ -44,13 +53,17 @@ class UI{
     });
   }
   showAlert(msg,classAlert){
-    if(!document.querySelector('.forError>.col>.alert')){
+    if(!document.querySelector('.forError')){
+      const newElem = document.createElement('div');
+      newElem.className='row forError mt-3 mb-3';
+      newElem.appendChild(document.createElement('div')).className='col';
+      document.querySelector('.postContainer>.stuff').insertBefore(newElem,document.querySelector('.forPost'));
       document.querySelector('.forError>.col').appendChild(document.createElement('div')).className=classAlert;
       const error = document.querySelector('.forError>.col>div');
       error.setAttribute('role', 'alert');
       error.textContent=msg;
       setTimeout(function(){
-        document.querySelector('.forError>.col>div').remove();
+        document.querySelector('.forError').remove();
       },3000);
     }
   }
@@ -87,6 +100,14 @@ class UI{
       document.querySelector('.forPost>.col>h4').textContent='Don\'t have any posts';
     }
   }
+  // paginate(pageAmount){
+  //   if(document.querySelector('.pagination')){
+  //     document.querySelector('.pagination').parentElement.remove();
+  //   }
+  //   document.insertBefore(document.createElement('nav'),document.querySelector('script')).appendChild(document.createElement('ul')).className='pagination';
+  //   document.querySelector('.pagination').appendChild(document.createElement('li')).className='page-item';
+  //   document.querySelector('.pagination').appendChild(document.createElement('li')).className='page-item';
+  // }
 }
 
 export const ui = new UI;
